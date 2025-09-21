@@ -1,14 +1,65 @@
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { fadeIn, staggerContainer } from '@/lib/motion';
+import { useEffect, useRef, useState } from 'react';
+import { useSpring, animated } from '@react-spring/web';
+import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
+import { AnimatedBackground } from './AnimatedBackground';
 
 const Hero = () => {
+  const containerRef = useRef(null);
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 500], [0, -150]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const [isVisible, setIsVisible] = useState(false);
+
+  const [{ blur }, api] = useSpring(() => ({
+    from: { blur: 0 },
+    to: { blur: 20 },
+    config: { mass: 1, tension: 280, friction: 60 }
+  }));
+
+  useEffect(() => {
+    setIsVisible(true);
+    const handleScroll = () => {
+      const scrollPercent = window.scrollY / window.innerHeight;
+      api.start({ blur: Math.min(20, scrollPercent * 40) });
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [api]);
+
   return (
-    <section className="relative bg-gradient-hero py-20 lg:py-32 overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-black/10 opacity-40" />
-      
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <ParallaxProvider>
+      <section ref={containerRef} className="relative min-h-screen bg-gradient-hero py-20 lg:py-32 overflow-hidden">
+        {/* Animated Background */}
+        <AnimatedBackground />
+        
+        {/* Progressive Blur Background */}
+        <animated.div 
+          style={{
+            backdropFilter: blur.to(b => `blur(${b}px)`),
+            WebkitBackdropFilter: blur.to(b => `blur(${b}px)`)
+          }}
+          className="absolute inset-0 bg-black/10" 
+        />
+        
+        {/* Parallax Background */}
+        <Parallax translateY={[-20, 20]} className="absolute inset-0">
+          <motion.div 
+            style={{ y }}
+            className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" 
+          />
+        </Parallax>
+        
+        <motion.div 
+          variants={staggerContainer}
+          initial="hidden"
+          animate={isVisible ? "visible" : "hidden"}
+          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <div className="text-center lg:text-left">
@@ -51,32 +102,190 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Visual Element */}
-          <div className="relative">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-              <div className="grid grid-cols-2 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-white">6</div>
-                  <div className="text-white/80">Core Sectors</div>
+          {/* Visual Element - Bento Grid */}
+          <div className="relative perspective-1000">
+            <motion.div 
+              variants={fadeIn('up')}
+              className="grid grid-cols-4 grid-rows-4 gap-4 p-4"
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+              {/* Large Stat Box */}
+              <motion.div 
+                className="col-span-2 row-span-2 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 group relative overflow-hidden"
+                whileHover={{ 
+                  scale: 1.05,
+                  backdropFilter: "blur(20px)",
+                }}
+                transition={{
+                  layout: { type: "spring", stiffness: 200, damping: 20 },
+                  scale: { type: "spring", stiffness: 300, damping: 20 }
+                }}
+              >
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                  initial={false}
+                  whileHover={{ scale: 1.2, rotate: 15 }}
+                />
+                <motion.div 
+                  className="h-full flex flex-col justify-center items-center relative z-10"
+                  whileHover={{ y: -5 }}
+                >
+                  <motion.div
+                    initial={{ scale: 1 }}
+                    whileHover={{ scale: 1.2 }}
+                    className="text-5xl font-bold text-white mb-2 relative"
+                  >
+                    <span className="relative z-10">6</span>
+                    <motion.div
+                      className="absolute inset-0 bg-secondary/20 rounded-full blur-xl -z-10"
+                      animate={{
+                        scale: [1, 1.2, 1],
+                        opacity: [0.5, 0.8, 0.5],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    />
+                  </motion.div>
+                  <div className="text-white/80 text-lg">Core Sectors</div>
+                </motion.div>
+              </motion.div>
+              
+              {/* Year Box */}
+              <motion.div 
+                className="col-span-2 row-span-1 bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 group relative overflow-hidden"
+                whileHover={{ 
+                  y: -5,
+                  backdropFilter: "blur(8px)",
+                }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              >
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/10 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
+                />
+                <div className="flex justify-between items-center relative z-10">
+                  <motion.span 
+                    className="text-white/80"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    Established
+                  </motion.span>
+                  <motion.span 
+                    className="text-2xl font-bold text-white"
+                    whileHover={{ 
+                      scale: 1.1,
+                      textShadow: "0 0 8px rgba(255,255,255,0.5)"
+                    }}
+                  >
+                    2021
+                  </motion.span>
                 </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-white">2021</div>
-                  <div className="text-white/80">Established</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-white">100%</div>
-                  <div className="text-white/80">Malawian Owned</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-white">8</div>
-                  <div className="text-white/80">Team Members</div>
-                </div>
-              </div>
-            </div>
+              </motion.div>
+              
+              {/* Ownership Box */}
+              <motion.div 
+                className="col-span-1 row-span-2 bg-secondary/10 backdrop-blur-sm rounded-xl p-4 border border-secondary/20 group relative overflow-hidden"
+                whileHover={{ 
+                  scale: 1.05,
+                  rotateY: 15,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 20
+                }}
+              >
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                />
+                <motion.div 
+                  className="h-full flex flex-col justify-center items-center relative z-10"
+                  whileHover={{ y: -3 }}
+                >
+                  <motion.div 
+                    className="text-3xl font-bold text-white"
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    100%
+                  </motion.div>
+                  <motion.div 
+                    className="text-white/80 text-sm text-center"
+                    animate={{
+                      opacity: [0.8, 1, 0.8],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    Malawian Owned
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+              
+              {/* Team Box */}
+              <motion.div 
+                className="col-span-1 row-span-2 bg-primary/10 backdrop-blur-sm rounded-xl p-4 border border-primary/20 group relative overflow-hidden"
+                whileHover={{ 
+                  scale: 1.05,
+                  rotateY: -15,
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 20
+                }}
+              >
+                <motion.div 
+                  className="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                />
+                <motion.div 
+                  className="h-full flex flex-col justify-center items-center relative z-10"
+                  whileHover={{ y: -3 }}
+                >
+                  <motion.div 
+                    className="text-3xl font-bold text-white relative"
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    <span>8</span>
+                    <motion.div
+                      className="absolute inset-0 bg-primary/20 rounded-full blur-lg -z-10"
+                      animate={{
+                        scale: [1, 1.2, 1],
+                        opacity: [0.5, 0.8, 0.5],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    />
+                  </motion.div>
+                  <motion.div 
+                    className="text-white/80 text-sm text-center"
+                    animate={{
+                      opacity: [0.8, 1, 0.8],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    Team Members
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
+    </ParallaxProvider>
   );
 };
 
