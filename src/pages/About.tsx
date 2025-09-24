@@ -2,14 +2,21 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Target, Eye, Users, Calendar } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      {/* Hero Section */}
-      <section className="bg-gradient-hero py-20">
+    <ParallaxProvider>
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}>
+        
+        {/* Hero Section */}
+        <section className="bg-gradient-hero py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             About Optional Group
@@ -152,8 +159,12 @@ const About = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+        </motion.div>
+        <Parallax translateY={[0, -20]}>
+          <Footer />
+        </Parallax>
+      </div>
+    </ParallaxProvider>
   );
 };
 

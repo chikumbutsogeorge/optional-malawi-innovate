@@ -2,6 +2,8 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
+import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
 import { Link } from 'react-router-dom';
 import { 
   CreditCard, 
@@ -16,6 +18,12 @@ import {
 } from 'lucide-react';
 
 const Services = () => {
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.5 }
+  };
+
   const services = [
     {
       icon: CreditCard,
@@ -104,8 +112,13 @@ const Services = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
+    <ParallaxProvider>
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}>
       
       {/* Hero Section */}
       <section className="bg-gradient-hero py-20">
@@ -216,8 +229,12 @@ const Services = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+        </motion.div>
+        <Parallax translateY={[0, -20]}>
+          <Footer />
+        </Parallax>
+      </div>
+    </ParallaxProvider>
   );
 };
 

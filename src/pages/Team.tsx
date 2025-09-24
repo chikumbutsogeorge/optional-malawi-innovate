@@ -2,6 +2,8 @@ import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
 import { Card, CardContent } from '@/components/ui/card';
 import { Mail, Linkedin } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
 
 // Import team images
 import elijahSande from '@/assets/team/elijah-sande.jpg';
@@ -14,6 +16,12 @@ import joanaChizenga from '@/assets/team/joana-chizenga.jpg';
 import shiellahChizenga from '@/assets/team/shiellah-chizenga.jpg';
 
 const Team = () => {
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.5 }
+  };
+
   const teamMembers = [
     {
       name: 'Elijah Jack Sande',
@@ -74,8 +82,13 @@ const Team = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
+    <ParallaxProvider>
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}>
       
       {/* Hero Section */}
       <section className="bg-gradient-hero py-20">
@@ -229,8 +242,12 @@ const Team = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+        </motion.div>
+        <Parallax translateY={[0, -20]}>
+          <Footer />
+        </Parallax>
+      </div>
+    </ParallaxProvider>
   );
 };
 
