@@ -24,8 +24,9 @@ export default defineConfig(({ mode }) => ({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['@radix-ui/react-icons', '@radix-ui/react-dialog', '@radix-ui/react-slot'],
-          animations: ['framer-motion', '@react-spring/web']
+          ui: ['lucide-react', '@radix-ui/react-dialog', '@radix-ui/react-slot', '@radix-ui/react-toast'],
+          animations: ['framer-motion', '@react-spring/web'],
+          query: ['@tanstack/react-query']
         }
       }
     }
