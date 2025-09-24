@@ -159,20 +159,18 @@ const Team = () => {
               </p>
             </motion.div>
 
-            {/* Team Bento Grid */}
-            <div className="grid grid-cols-12 gap-6">
+            {/* Team Bento Grid: use auto-rows-min so each grid row adapts to content height */}
+            <div className="grid grid-cols-12 auto-rows-min gap-6">
               {teamMembers.map((member, index) => {
                 const isDirector = index < 2;
                 return (
                   <BentoCard
                     key={index}
-                    className={`${isDirector ? 'col-span-12 md:col-span-6' : 'col-span-12 md:col-span-4'} ${
-                      index === 0 ? 'md:row-span-2' : ''
-                    }`}
+                    className={`${isDirector ? 'col-span-12 md:col-span-6' : 'col-span-12 md:col-span-4'}`}
                     delay={index * 0.1}
                   >
                     <motion.div 
-                      className="p-6 flex flex-col items-center text-center h-full"
+                      className="p-6 flex flex-col items-center text-center"
                       whileHover={{ y: -5 }}
                     >
                       <motion.div 
