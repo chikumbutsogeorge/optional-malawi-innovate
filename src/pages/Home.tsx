@@ -286,77 +286,77 @@ const Home = () => {
         {/* Background Layers */}
         <div className="absolute inset-0">
           <Parallax translateY={[-40, 40]}>
-            <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20" />
           </Parallax>
           <Parallax translateY={[20, -20]} scale={[0.8, 1.2]}>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.1)_0%,_transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--primary)_0%,_transparent_70%)] opacity-10" />
           </Parallax>
           <Parallax translateY={[-10, 10]}>
-            <motion.div 
-              className="absolute inset-0"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 0.15 }}
-              transition={{ duration: 1 }}
-              style={{
-                background: "radial-gradient(circle at center, white 0.5px, transparent 0.5px)",
-                backgroundSize: "24px 24px"
-              }}
-            />
+        <motion.div 
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 0.05 }}
+          transition={{ duration: 1 }}
+          style={{
+            background: "radial-gradient(circle at center, var(--primary) 0.5px, transparent 0.5px)",
+            backgroundSize: "24px 24px"
+          }}
+        />
           </Parallax>
           <Parallax translateY={[0, -30]}>
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
           </Parallax>
         </div>
 
         {/* Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
           <motion.div
-            className="relative z-10"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+        className="relative z-10"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Ready to Get Started?
-            </h2>
-            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              Let us help you find the perfect solution for your needs. 
-              Contact our team today to learn more about our services.
-            </p>
-            <motion.div 
-              className="flex flex-col sm:flex-row gap-4 justify-center"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+          Ready to Get Started?
+        </h2>
+        <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          Let us help you find the perfect solution for your needs. 
+          Contact our team today to learn more about our services.
+        </p>
+        <motion.div 
+          className="flex flex-col sm:flex-row gap-4 justify-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button 
+          asChild 
+          size="lg" 
+          className="bg-gradient-primary hover:shadow-primary"
             >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button 
-                  asChild 
-                  size="lg" 
-                  className="bg-white text-primary hover:bg-white/90 backdrop-blur-sm shadow-lg shadow-black/20 border-2 border-white/20"
-                >
-                  <Link to="/contact">
-                    Contact Us Today
-                    <motion.span
-                      animate={{ x: [0, 4, 0] }}
-                      transition={{ repeat: Infinity, duration: 1.5 }}
-                    >
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </motion.span>
-                  </Link>
-                </Button>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button 
-                  asChild 
-                  variant="outline" 
-                  size="lg" 
-                  className="border-2 border-white text-white hover:bg-white/10 backdrop-blur-sm shadow-lg shadow-black/20"
-                >
-                  <Link to="/about">Learn More About Us</Link>
-                </Button>
-              </motion.div>
-            </motion.div>
+          <Link to="/contact">
+            Contact Us Today
+            <motion.span
+              animate={{ x: [0, 4, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+            >
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </motion.span>
+          </Link>
+            </Button>
+          </motion.div>
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Button 
+          asChild 
+          variant="outline" 
+          size="lg" 
+          className="border-primary hover:bg-primary/10"
+            >
+          <Link to="/about">Learn More About Us</Link>
+            </Button>
+          </motion.div>
+        </motion.div>
           </motion.div>
         </div>
       </motion.section>
