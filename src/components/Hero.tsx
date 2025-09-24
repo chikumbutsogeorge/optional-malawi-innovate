@@ -71,22 +71,7 @@ const Hero = () => {
               Through innovation, collaboration, and responsible business practices. 
               Optional Group of Companies Ltd provides diverse services across six core sectors.
             </p>
-            
-            {/* Key Points */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center lg:justify-start">
-              <div className="flex items-center text-white/90">
-                <CheckCircle className="h-5 w-5 text-secondary mr-2" />
-                <span>Proudly Malawian-owned</span>
-              </div>
-              <div className="flex items-center text-white/90">
-                <CheckCircle className="h-5 w-5 text-secondary mr-2" />
-                <span>6 Core Sectors</span>
-              </div>
-              <div className="flex items-center text-white/90">
-                <CheckCircle className="h-5 w-5 text-secondary mr-2" />
-                <span>Innovative Solutions</span>
-              </div>
-            </div>
+
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -96,192 +81,192 @@ const Hero = () => {
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary">
+              <Button asChild variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white hover:text-primary transition-colors">
                 <Link to="/contact">Contact Us</Link>
               </Button>
             </div>
           </div>
 
-          {/* Visual Element - Bento Grid */}
-          <div className="relative perspective-1000">
+            {/* Visual Element - Bento Grid */}
+            <div className="relative perspective-1000">
             <motion.div 
               variants={fadeIn('up')}
-              className="grid grid-cols-4 grid-rows-4 gap-4 p-4"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 grid-rows-4 gap-4 p-2 sm:p-4"
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               {/* Large Stat Box */}
               <motion.div 
-                className="col-span-2 row-span-2 bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 group relative overflow-hidden"
-                whileHover={{ 
-                  scale: 1.05,
-                  backdropFilter: "blur(20px)",
-                }}
-                transition={{
-                  layout: { type: "spring", stiffness: 200, damping: 20 },
-                  scale: { type: "spring", stiffness: 300, damping: 20 }
-                }}
+              className="col-span-1 sm:col-span-2 row-span-2 bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6 border border-white/20 group relative overflow-hidden"
+              whileHover={{ 
+                scale: 1.05,
+                backdropFilter: "blur(20px)",
+              }}
+              transition={{
+                layout: { type: "spring", stiffness: 200, damping: 20 },
+                scale: { type: "spring", stiffness: 300, damping: 20 }
+              }}
               >
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
-                  initial={false}
-                  whileHover={{ scale: 1.2, rotate: 15 }}
-                />
-                <motion.div 
-                  className="h-full flex flex-col justify-center items-center relative z-10"
-                  whileHover={{ y: -5 }}
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+                initial={false}
+                whileHover={{ scale: 1.2, rotate: 15 }}
+              />
+              <motion.div 
+                className="h-full flex flex-col justify-center items-center relative z-10"
+                whileHover={{ y: -5 }}
+              >
+                <motion.div
+                initial={{ scale: 1 }}
+                whileHover={{ scale: 1.2 }}
+                className="text-4xl sm:text-5xl font-bold text-white mb-2 relative"
                 >
-                  <motion.div
-                    initial={{ scale: 1 }}
-                    whileHover={{ scale: 1.2 }}
-                    className="text-5xl font-bold text-white mb-2 relative"
-                  >
-                    <span className="relative z-10">6</span>
-                    <motion.div
-                      className="absolute inset-0 bg-secondary/20 rounded-full blur-xl -z-10"
-                      animate={{
-                        scale: [1, 1.2, 1],
-                        opacity: [0.5, 0.8, 0.5],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                    />
-                  </motion.div>
-                  <div className="text-white/80 text-lg">Core Sectors</div>
+                <span className="relative z-10">6</span>
+                <motion.div
+                  className="absolute inset-0 bg-secondary/20 rounded-full blur-xl -z-10"
+                  animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.5, 0.8, 0.5],
+                  }}
+                  transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                  }}
+                />
                 </motion.div>
+                <div className="text-white/80 text-base sm:text-lg">Core Sectors</div>
+              </motion.div>
               </motion.div>
               
               {/* Year Box */}
               <motion.div 
-                className="col-span-2 row-span-1 bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 group relative overflow-hidden"
-                whileHover={{ 
-                  y: -5,
-                  backdropFilter: "blur(8px)",
-                }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className="col-span-1 sm:col-span-2 row-span-1 bg-white/5 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-white/10 group relative overflow-hidden"
+              whileHover={{ 
+                y: -5,
+                backdropFilter: "blur(8px)",
+              }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
-                <motion.div 
-                  className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/10 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
-                />
-                <div className="flex justify-between items-center relative z-10">
-                  <motion.span 
-                    className="text-white/80"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    Established
-                  </motion.span>
-                  <motion.span 
-                    className="text-2xl font-bold text-white"
-                    whileHover={{ 
-                      scale: 1.1,
-                      textShadow: "0 0 8px rgba(255,255,255,0.5)"
-                    }}
-                  >
-                    2021
-                  </motion.span>
-                </div>
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/10 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
+              />
+              <div className="flex justify-between items-center relative z-10">
+                <motion.span 
+                className="text-white/80 text-sm sm:text-base"
+                whileHover={{ scale: 1.05 }}
+                >
+                Established
+                </motion.span>
+                <motion.span 
+                className="text-xl sm:text-2xl font-bold text-white"
+                whileHover={{ 
+                  scale: 1.1,
+                  textShadow: "0 0 8px rgba(255,255,255,0.5)"
+                }}
+                >
+                2021
+                </motion.span>
+              </div>
               </motion.div>
               
               {/* Ownership Box */}
               <motion.div 
-                className="col-span-1 row-span-2 bg-secondary/10 backdrop-blur-sm rounded-xl p-4 border border-secondary/20 group relative overflow-hidden"
-                whileHover={{ 
-                  scale: 1.05,
-                  rotateY: 15,
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 20
-                }}
+              className="col-span-1 row-span-2 bg-secondary/10 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-secondary/20 group relative overflow-hidden"
+              whileHover={{ 
+                scale: 1.05,
+                rotateY: 15,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 20
+              }}
+              >
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+              />
+              <motion.div 
+                className="h-full flex flex-col justify-center items-center relative z-10"
+                whileHover={{ y: -3 }}
               >
                 <motion.div 
-                  className="absolute inset-0 bg-gradient-to-t from-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
-                />
-                <motion.div 
-                  className="h-full flex flex-col justify-center items-center relative z-10"
-                  whileHover={{ y: -3 }}
+                className="text-2xl sm:text-3xl font-bold text-white"
+                whileHover={{ scale: 1.1 }}
                 >
-                  <motion.div 
-                    className="text-3xl font-bold text-white"
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    100%
-                  </motion.div>
-                  <motion.div 
-                    className="text-white/80 text-sm text-center"
-                    animate={{
-                      opacity: [0.8, 1, 0.8],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  >
-                    Malawian Owned
-                  </motion.div>
+                100%
                 </motion.div>
+                <motion.div 
+                className="text-white/80 text-xs sm:text-sm text-center"
+                animate={{
+                  opacity: [0.8, 1, 0.8],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                >
+                Malawian Owned
+                </motion.div>
+              </motion.div>
               </motion.div>
               
               {/* Team Box */}
               <motion.div 
-                className="col-span-1 row-span-2 bg-primary/10 backdrop-blur-sm rounded-xl p-4 border border-primary/20 group relative overflow-hidden"
-                whileHover={{ 
-                  scale: 1.05,
-                  rotateY: -15,
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 20
-                }}
+              className="col-span-1 row-span-2 bg-primary/10 backdrop-blur-sm rounded-xl p-3 sm:p-4 border border-primary/20 group relative overflow-hidden"
+              whileHover={{ 
+                scale: 1.05,
+                rotateY: -15,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 20
+              }}
+              >
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
+              />
+              <motion.div 
+                className="h-full flex flex-col justify-center items-center relative z-10"
+                whileHover={{ y: -3 }}
               >
                 <motion.div 
-                  className="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"
-                />
-                <motion.div 
-                  className="h-full flex flex-col justify-center items-center relative z-10"
-                  whileHover={{ y: -3 }}
+                className="text-2xl sm:text-3xl font-bold text-white relative"
+                whileHover={{ scale: 1.1 }}
                 >
-                  <motion.div 
-                    className="text-3xl font-bold text-white relative"
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    <span>8</span>
-                    <motion.div
-                      className="absolute inset-0 bg-primary/20 rounded-full blur-lg -z-10"
-                      animate={{
-                        scale: [1, 1.2, 1],
-                        opacity: [0.5, 0.8, 0.5],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                    />
-                  </motion.div>
-                  <motion.div 
-                    className="text-white/80 text-sm text-center"
-                    animate={{
-                      opacity: [0.8, 1, 0.8],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  >
-                    Team Members
-                  </motion.div>
+                <span>8</span>
+                <motion.div
+                  className="absolute inset-0 bg-primary/20 rounded-full blur-lg -z-10"
+                  animate={{
+                  scale: [1, 1.2, 1],
+                  opacity: [0.5, 0.8, 0.5],
+                  }}
+                  transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                  }}
+                />
+                </motion.div>
+                <motion.div 
+                className="text-white/80 text-xs sm:text-sm text-center"
+                animate={{
+                  opacity: [0.8, 1, 0.8],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                >
+                Team Members
                 </motion.div>
               </motion.div>
+              </motion.div>
             </motion.div>
-          </div>
+            </div>
         </div>
       </motion.div>
     </section>
