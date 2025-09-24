@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { ParallaxProvider, Parallax, useParallax } from 'react-scroll-parallax';
 import { 
   CreditCard, 
   Shield, 
@@ -98,17 +99,29 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      <Hero />
-      <main>
+    <ParallaxProvider>
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <Hero />
+        <main className="relative">
         {/* Services Section */}
         <motion.section 
-        className="py-20 relative overflow-hidden bg-gradient-to-b from-background to-background/50"
-        style={{ y: servicesY, opacity: servicesOpacity }}
+        className="py-20 relative overflow-hidden"
+        style={{ opacity: servicesOpacity }}
       >
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#4444ff08_1px,transparent_1px),linear-gradient(to_bottom,#4444ff08_1px,transparent_1px)] bg-[size:44px_44px]" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-secondary/5 to-primary/5" />
+        <Parallax 
+          translateY={[20, -20]} 
+          className="absolute inset-0 bg-gradient-to-b from-background to-background/50" 
+        />
+        <Parallax
+          translateY={[-10, 10]}
+          className="absolute inset-0 bg-[linear-gradient(to_right,#4444ff08_1px,transparent_1px),linear-gradient(to_bottom,#4444ff08_1px,transparent_1px)] bg-[size:44px_44px]"
+        />
+        <Parallax
+          translateY={[5, -5]}
+          scale={[0.8, 1.2]}
+          className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-secondary/5 to-primary/5"
+        />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <motion.div 
             className="text-center mb-16"
@@ -125,8 +138,9 @@ const Home = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-12 gap-4">
-            {services.map((service, index) => {
+          <Parallax translateY={[0, -20]} className="relative z-10">
+            <div className="grid grid-cols-12 gap-4">
+              {services.map((service, index) => {
               const IconComponent = service.icon;
               // New layout pattern for bento grid
               const isLarge = index === 0;
@@ -188,43 +202,53 @@ const Home = () => {
                   </motion.div>
                 </BentoCard>
               );
-            })}
-          </div>
+              })}
+            </div>
 
-          <div className="text-center mt-12">
-            <Button asChild size="lg" className="bg-gradient-primary hover:shadow-primary">
-              <Link to="/services">
-                View All Services
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
+            <div className="text-center mt-12">
+              <Parallax translateY={[0, -30]} scale={[0.95, 1.05]}>
+                <Button asChild size="lg" className="bg-gradient-primary hover:shadow-primary">
+                  <Link to="/services">
+                    View All Services
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </Parallax>
+            </div>
+          </Parallax>
         </div>
         </motion.section>
 
         {/* Values Section */}
         <motion.section 
-        className="py-20 relative"
-        style={{ y: valuesY, opacity: valuesOpacity }}
+        className="py-20 relative overflow-hidden"
+        style={{ opacity: valuesOpacity }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Our Core Values
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              The principles that guide everything we do and drive our commitment 
-              to excellence and social responsibility.
-            </p>
-          </motion.div>
+        <Parallax translateY={[-30, 30]} className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background to-background/50" />
+        </Parallax>
+        <Parallax translateY={[15, -15]} className="absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--primary)_0%,_transparent_70%)] opacity-5" />
+        </Parallax>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <Parallax translateY={[0, -20]} className="relative z-10">
+            <motion.div 
+              className="text-center mb-16"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Our Core Values
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                The principles that guide everything we do and drive our commitment 
+                to excellence and social responsibility.
+              </p>
+            </motion.div>
 
-          <div className="grid grid-cols-12 gap-6">
-            {values.map((value, index) => {
+            <div className="grid grid-cols-12 gap-6">
+              {values.map((value, index) => {
               const IconComponent = value.icon;
               return (
                 <BentoCard
@@ -249,30 +273,45 @@ const Home = () => {
                 </BentoCard>
               );
             })}
-          </div>
+            </div>
+          </Parallax>
         </div>
       </motion.section>
 
       {/* CTA Section */}
       <motion.section 
         className="py-20 relative overflow-hidden"
-        style={{ y: ctaY, opacity: ctaOpacity }}
+        style={{ opacity: ctaOpacity }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.1)_0%,_transparent_70%)]" />
-        <motion.div 
-          className="absolute inset-0"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 0.15 }}
-          transition={{ duration: 1 }}
-          style={{
-            background: "radial-gradient(circle at center, white 0.5px, transparent 0.5px)",
-            backgroundSize: "24px 24px"
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20" />
+        {/* Background Layers */}
+        <div className="absolute inset-0">
+          <Parallax translateY={[-40, 40]}>
+            <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary" />
+          </Parallax>
+          <Parallax translateY={[20, -20]} scale={[0.8, 1.2]}>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.1)_0%,_transparent_70%)]" />
+          </Parallax>
+          <Parallax translateY={[-10, 10]}>
+            <motion.div 
+              className="absolute inset-0"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 0.15 }}
+              transition={{ duration: 1 }}
+              style={{
+                background: "radial-gradient(circle at center, white 0.5px, transparent 0.5px)",
+                backgroundSize: "24px 24px"
+              }}
+            />
+          </Parallax>
+          <Parallax translateY={[0, -30]}>
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20" />
+          </Parallax>
+        </div>
+
+        {/* Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
           <motion.div
+            className="relative z-10"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -320,11 +359,14 @@ const Home = () => {
             </motion.div>
           </motion.div>
         </div>
-        </motion.section>
+      </motion.section>
       </main>
 
-      <Footer />
+      <Parallax translateY={[0, -20]}>
+        <Footer />
+      </Parallax>
     </div>
+  </ParallaxProvider>
   );
 };
 
