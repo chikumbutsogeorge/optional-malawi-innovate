@@ -23,7 +23,7 @@ const BentoCard = ({ children, className = "", delay = 0 }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay }}
-      className={`${className} relative overflow-hidden rounded-3xl bg-gradient-to-b from-background/90 to-background p-6 shadow-lg backdrop-blur-sm border border-primary/10 group hover:border-primary/20 hover:shadow-primary/5 transition-all duration-500`}
+      className={`${className} relative overflow-hidden rounded-3xl bg-gradient-to-br from-background/80 via-background/90 to-background/80 p-6 shadow-xl backdrop-blur-sm border border-primary/10 group hover:border-primary/20 hover:shadow-primary/10 hover:bg-gradient-to-br hover:from-primary/5 hover:via-secondary/5 hover:to-primary/5 transition-all duration-500`}
     >
       {children}
     </motion.div>
@@ -125,47 +125,67 @@ const Home = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-12 gap-4 auto-rows-[180px]">
+          <div className="grid grid-cols-12 gap-4">
             {services.map((service, index) => {
               const IconComponent = service.icon;
-              const isWide = index === 0 || index === 3;
-              const isTall = index === 2 || index === 5;
+              // New layout pattern for bento grid
+              const isLarge = index === 0;
+              const isMedium = index === 1 || index === 4;
+              const isVertical = index === 2 || index === 5;
+              const isHorizontal = index === 3;
               
               return (
                 <BentoCard
                   key={index}
                   className={`
-                    ${isWide ? 'col-span-12 md:col-span-8' : isTall ? 'col-span-12 md:col-span-4 md:row-span-2' : 'col-span-12 md:col-span-4'}
-                    group cursor-pointer
+                    ${isLarge ? 'col-span-12 md:col-span-8 md:row-span-2' : ''}
+                    ${isMedium ? 'col-span-12 md:col-span-4 md:row-span-1' : ''}
+                    ${isVertical ? 'col-span-12 md:col-span-4 md:row-span-2' : ''}
+                    ${isHorizontal ? 'col-span-12 md:col-span-8 md:row-span-1' : ''}
+                    ${(!isLarge && !isMedium && !isVertical && !isHorizontal) ? 'col-span-12 md:col-span-4 md:row-span-1' : ''}
+                    min-h-[200px] group cursor-pointer
                   `}
                   delay={index * 0.1}
                 >
-                  <div className="h-full flex flex-col">
-                    <div className="flex items-start justify-between mb-4">
-                      <motion.div 
-                        className={`w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
-                        whileHover={{ rotate: 5 }}
-                      >
-                        <IconComponent className={`h-6 w-6 ${service.color}`} />
-                      </motion.div>
-                      <motion.div
-                        className="h-8 w-8 rounded-full bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-20"
-                        whileHover={{ scale: 1.2, rotate: 180 }}
-                        transition={{ duration: 0.6 }}
-                      />
+                  <motion.div 
+                    className="h-full flex flex-col justify-between p-2"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                  >
+                    <div className="space-y-4">
+                      <div className="flex items-start justify-between">
+                        <motion.div 
+                          className={`w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 via-secondary/20 to-primary/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-all duration-300`}
+                          whileHover={{ rotate: 5 }}
+                        >
+                          <IconComponent className={`h-6 w-6 ${service.color} drop-shadow-glow`} />
+                        </motion.div>
+                        <motion.div
+                          className="h-8 w-8 rounded-full bg-gradient-to-r from-primary via-secondary to-primary opacity-0 group-hover:opacity-20 shadow-lg"
+                          whileHover={{ scale: 1.2, rotate: 180 }}
+                          transition={{ duration: 0.6 }}
+                        />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold mb-2 text-foreground">{service.title}</h3>
+                        <p className="text-muted-foreground/90">{service.description}</p>
+                      </div>
                     </div>
-                    <h3 className="text-xl font-semibold mb-2 text-foreground">{service.title}</h3>
-                    <p className="text-muted-foreground">{service.description}</p>
                     <motion.div 
-                      className="mt-auto flex items-center text-primary font-medium"
+                      className="flex items-center text-primary font-medium mt-4 group-hover:text-secondary transition-colors duration-300"
                       initial={{ opacity: 0, x: -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.2 }}
                     >
-                      Learn more
-                      <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      <span>Learn more</span>
+                      <motion.div
+                        animate={{ x: [0, 4, 0] }}
+                        transition={{ repeat: Infinity, duration: 1.5 }}
+                      >
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </motion.div>
                     </motion.div>
-                  </div>
+                  </motion.div>
                 </BentoCard>
               );
             })}
