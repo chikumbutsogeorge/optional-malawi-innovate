@@ -44,12 +44,36 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for your inquiry. We'll get back to you soon.",
-    });
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    (async () => {
+      try {
+        const res = await fetch('/server/send_mail.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+
+        const contentType = res.headers.get('content-type') || '';
+        let data: any = null;
+
+        if (contentType.includes('application/json')) {
+          data = await res.json();
+        } else {
+          // Non-JSON response (e.g. raw PHP source or HTML error). Read text for diagnostics.
+          const text = await res.text();
+          const snippet = text.slice(0, 1000);
+          throw new Error('Server did not return JSON. This often means PHP is not running and the file was served as text. Response snippet: ' + snippet);
+        }
+
+        if (!res.ok) throw new Error(data.message || 'Failed to send message');
+
+        toast({ title: 'Message Sent!', description: data.message || "We'll get back to you soon." });
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      } catch (err: any) {
+        console.error(err);
+        const message = err?.message || 'Failed to send message';
+        toast({ title: 'Error', description: message, variant: 'destructive' });
+      }
+    })();
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

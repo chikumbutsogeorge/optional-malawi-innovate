@@ -1,0 +1,13 @@
+{
+  "name": "optionalgroup/server",
+  "description": "Server endpoint for contact form using PHPMailer",
+  "require": {
+    "php": ">=7.4",
+    "phpmailer/phpmailer": "^6.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "OptionalServer\\": "src/"
+    }
+  }
+}

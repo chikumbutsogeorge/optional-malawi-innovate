@@ -8,7 +8,11 @@ export default defineConfig(({ mode }) => ({
   base: "/",
   server: {
     host: "::",
-    port: 8080,
+    port: 8000,
+    // Proxy backend PHP during local development so Vite doesn't serve .php files as static text
+    proxy: {
+      '/server': 'http://127.0.0.1:8080'
+    },
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
@@ -21,6 +25,10 @@ export default defineConfig(({ mode }) => ({
     sourcemap: true,
     assetsDir: "assets",
     rollupOptions: {
+        // Treat some optional packages as external to avoid hard build failures
+        external: [
+          '@radix-ui/react-icons'
+        ],
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom', 'react-router-dom'],
