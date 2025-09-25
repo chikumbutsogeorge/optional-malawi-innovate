@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ParallaxProvider, Parallax, useParallax } from 'react-scroll-parallax';
+import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
 import { 
   CreditCard, 
   Shield, 
