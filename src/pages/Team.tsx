@@ -1,6 +1,6 @@
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
-import { Mail, Linkedin, Users } from 'lucide-react';
+import { Mail, Linkedin } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ParallaxProvider, Parallax } from 'react-scroll-parallax';
 
